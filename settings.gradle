@@ -13,5 +13,12 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = 'demo'
+//Server Side
 include ':server:app'
+//Client Demo
 include ':client:drink:app'
+include ':client:google:app'
+//common library
+include ':common:google:chooserx'
+include ':common:google:lint'
+include ':common:google:lintchecks'
