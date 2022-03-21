@@ -32,3 +32,29 @@ dependencies {
     implementation 'org.projectlombok:lombok:1.18.12'
     implementation 'com.google.firebase:firebase-admin:6.8.1'
 }
+
+task increaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.increaseVersion("")
+    }
+}
+
+task increaseHotfixVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.increaseHotfixVersion("")
+    }
+}
+
+task decreaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.decreaseVersion("")
+    }
+}
+
+task showCurrentVersion {
+    group "version Tasks"
+    this.project.ext.currentVersion("")
+}

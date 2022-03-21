@@ -30,3 +30,29 @@ dependencies {
     api 'androidx.recyclerview:recyclerview:1.2.1'
     api 'androidx.constraintlayout:constraintlayout:2.1.0'
 }
+
+task increaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.increaseVersion("")
+    }
+}
+
+task increaseHotfixVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.increaseHotfixVersion("")
+    }
+}
+
+task decreaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.decreaseVersion("")
+    }
+}
+
+task showCurrentVersion {
+    group "version Tasks"
+    this.project.ext.currentVersion("")
+}

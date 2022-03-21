@@ -27,3 +27,29 @@ jar {
         attributes("Lint-Registry-v2": "com.firebase.lint.QuickstartIssueRegistry")
     }
 }
+
+task increaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.increaseVersion("")
+    }
+}
+
+task increaseHotfixVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.increaseHotfixVersion("")
+    }
+}
+
+task decreaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.decreaseVersion("")
+    }
+}
+
+task showCurrentVersion {
+    group "version Tasks"
+    this.project.ext.currentVersion("")
+}
