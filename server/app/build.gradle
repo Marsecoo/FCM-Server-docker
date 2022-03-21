@@ -9,8 +9,8 @@ apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/vers
 def version = this.ext.default_version()
 project.group = 'com.weng'
 project.version = version.versionName
-
 description = 'demo'
+archivesBaseName=description
 
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
