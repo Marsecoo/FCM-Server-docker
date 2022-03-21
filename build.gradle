@@ -1,4 +1,12 @@
 buildscript {
+    ext {
+        android_gradle_plugin_version = '4.1.2'//4.1.2 , 4.2.1,7.0.4
+        compileSdkVersion = 29
+        targetSdkVersion = compileSdkVersion
+        minSdkVersion = 19
+        kotlin_version = "1.6.10"
+        koin_version = "2.2.2"
+    }
     repositories {
         google()
         mavenCentral()
@@ -8,6 +16,13 @@ buildscript {
         }
     }
     dependencies {
-
+        classpath "com.android.tools.build:gradle:$android_gradle_plugin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.3.8'
+        classpath "com.github.qq549631030:android-junk-code:1.0.7"
     }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
