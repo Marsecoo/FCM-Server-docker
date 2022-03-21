@@ -3,7 +3,8 @@ plugins {
     id 'kotlin-android'
     id 'com.google.gms.google-services'
 }
-
+apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/version.gradle'
+def version = this.ext.default_version()
 //check.dependsOn 'assembleDebugAndroidTest'
 
 android {
@@ -20,8 +21,9 @@ android {
         applicationId "com.google.firebase.quickstart.fcm.demo"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode version.versionCode.toInteger()
+        versionName version.versionName
+        project.version = version.versionName
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

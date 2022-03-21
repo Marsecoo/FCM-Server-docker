@@ -2,6 +2,9 @@ plugins {
     id 'java-library'
     id 'kotlin'
 }
+apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/version.gradle'
+def version = this.ext.default_version()
+project.version = version.versionName
 
 java {
     targetCompatibility = JavaVersion.VERSION_11

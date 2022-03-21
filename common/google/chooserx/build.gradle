@@ -1,14 +1,17 @@
 plugins {
     id 'com.android.library'
 }
-
+apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/version.gradle'
+def version = this.ext.default_version()
 android {
     compileSdkVersion 30
 
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 30
-
+        versionCode version.versionCode.toInteger()
+        versionName version.versionName
+        project.version = version.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
