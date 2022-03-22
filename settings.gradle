@@ -14,7 +14,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = 'demo'
 //Server Side
-include ':server:app'
+include ':server:Spring_Boot:app'
 //Client Demo
 include ':client:drink:app'
 include ':client:google:app'
