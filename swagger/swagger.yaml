@@ -1,0 +1,229 @@
+swagger: '2.0'
+info:
+  title: Firebase Cloud Messaging
+  description: Send downstream messages to client apps
+  version: 1.0.0
+host: fcm.googleapis.com
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+security:
+  - api_key: []
+tags:
+  - name: FCM
+    description: Firebase Cloud Messaging
+
+paths:
+  /fcm/send:
+    post:
+      tags:
+      - FCM
+      description: Send downstream messages to client apps
+      parameters:
+      - in: "body"
+        name: "message"
+        description: "Downstream message to send"
+        required: true
+        schema:
+          $ref: "#/definitions/Message"
+      responses:
+        '200':
+          description: Message was processed successfully.
+          schema:
+            $ref: '#/definitions/Response'
+        '400':
+          description: Indicates that the request could not be parsed as JSON, or it contained invalid fields (for instance, passing a string where a number was expected). The exact failure reason is described in the response and the problem should be addressed before the request can be retried.
+        '401':
+          description: There was an error authenticating the sender account.
+        default:
+          description: Errors in the 500-599 range (such as 500 or 503) indicate that there was an internal error in the FCM connection server while trying to process the request, or that the server is temporarily unavailable (for example, because of timeouts). Sender must retry later, honoring any **Retry-After** header included in the response. Application servers must implement exponential back-off.
+
+definitions:
+  Message:
+    type: object
+    properties:
+      to:
+        description: |
+          This parameter specifies the recipient of a message.
+          The value must be a registration token, notification key, or topic. Do not set this field when sending to multiple topics. See **condition**.
+        type: string
+      registration_ids:
+        description: |
+          This parameter specifies a list of devices (registration tokens, or IDs) receiving a multicast message. It must contain at least 1 and at most 1000 registration tokens.
+          Use this parameter only for multicast messaging, not for single recipients. Multicast messages (sending to more than 1 registration tokens) are allowed using HTTP JSON format only.
+        type: array
+        items:
+          type: string
+      condition:
+        description: |
+          This parameter specifies a logical expression of conditions that determine the message target.
+          Supported condition: Topic, formatted as yourTopic in topics. This value is case-insensitive.
+          Supported operators: &&, ||. Maximum two operators per topic message supported.
+        type: string
+      notification_key:
+        description: |
+          This parameter is deprecated. Instead, use **to** to specify message recipients. For more information on how to send messages to multiple devices using **to**, see [Device Group Messaging](https://firebase.google.com/docs/cloud-messaging/notifications).
+        type: string
+      collapse_key:
+        description: |
+          This parameter identifies a group of messages (e.g., with ```"collapse_key": "Updates Available"```) that can be collapsed, so that only the last message gets sent when delivery can be resumed. This is intended to avoid sending too many of the same messages when the device comes back online or becomes active (see **delay_while_idle**).
+          Note that there is no guarantee of the order in which messages get sent.
+          Note: A maximum of 4 different collapse keys is allowed at any given time. This means a FCM connection server can simultaneously store 4 different send-to-sync messages per client app. If you exceed this number, there is no guarantee which 4 collapse keys the FCM connection server will keep.
+        type: string
+      priority:
+        description: |
+          Sets the priority of the message. Valid values are normal and high. On iOS, these correspond to APNs priorities 5 and 10.
+          By default, messages are sent with normal priority. Normal priority optimizes the client app's battery consumption and should be used unless immediate delivery is required. For messages with normal priority, the app may receive the message with unspecified delay.
+          When a message is sent with high priority, it is sent immediately, and the app can wake a sleeping device and open a network connection to your server.For more information, see [Setting the priority of a message](https://firebase.google.com/docs/cloud-messaging/concept-options#setting-the-priority-of-a-message).
+        type: string
+        enum:
+        - normal
+        - high
+      content_available:
+        description: |
+          On iOS, use this field to represent **content-available** in the APNS payload. When a notification or message is sent and this is set to ```true```, an inactive client app is awoken. On Android, data messages wake the app by default. On Chrome, currently not supported.
+        type: boolean
+      mutable_content:
+        description: |
+          Currently for iOS 10+ devices only. On iOS, use this field to represent mutable-content in the APNS payload. When a notification is sent and this is set to true, the content of the notification can be modified before it is displayed, using a [Notification Service app extension](https://developer.apple.com/reference/usernotifications/unnotificationserviceextension). This parameter will be ignored for Android and web.
+        type: boolean
+      delay_while_idle:
+        description: |
+          When this parameter is set to ```true```, it indicates that the message should not be sent until the device becomes active.
+          The default value is ```false```.
+        type: boolean
+      time_to_live:
+        description: |
+          This parameter specifies how long (in seconds) the message should be kept in FCM storage if the device is offline. The maximum time to live supported is 4 weeks, and the default value is 4 weeks. For more information, see [Setting the lifespan of a message](https://firebase.google.com/docs/cloud-messaging/concept-options#ttl).
+        type: number
+      restricted_package_name:
+        description: |
+          This parameter specifies the package name of the application where the registration tokens must match in order to receive the message.
+        type: string
+      dry_run:
+        description: |
+          This parameter, when set to ```true```, allows developers to test a request without actually sending a message.
+          The default value is ```false```.
+        type: boolean
+      data:
+        description: |
+          This parameter specifies the custom key-value pairs of the message's payload.
+          For example, with ```"data":{"score":"3x1"}```:
+          On iOS, if the message is sent via APNS, it represents the custom data fields. If it is sent via FCM connection server, it would be represented as key value dictionary in ```AppDelegate application:didReceiveRemoteNotification:```.
+          On Android, this would result in an intent extra named **score** with the string value **3x1**.
+          The key should not be a reserved word ("from" or any word starting with "google" or "gcm"). Do not use any of the words defined in this table (such as **collapse_key**).
+        type: object
+        additionalProperties:
+          type: string
+      notification:
+        $ref: "#/definitions/Notification"
+
+  Notification:
+    description: |
+      Notification payload. For more information about notification message and data message options, see [Payload](https://firebase.google.com/docs/cloud-messaging/concept-options#notifications_and_data_messages).
+    type: object
+    properties:
+      title:
+        description: Indicates notification title. This field is not visible on iOS phones and tablets. Field is required for android.
+        type: string
+      body:
+        description: Indicates notification body text.
+        type: string
+      icon:
+        description: "android: Indicates notification icon. Sets value to **myicon** for drawable resource **myicon**."
+        type: string
+      sound:
+        description: |
+          Indicates a sound to play when the device receives a notification.
+          * iOS: Sound files can be in the main bundle of the client app or in the Library/Sounds folder of the app's data container. See the [iOS Developer Library](https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/IPhoneOSClientImp.html#//apple_ref/doc/uid/TP40008194-CH103-SW6) for more information).
+          * android: Supports default or the filename of a sound resource bundled in the app. Sound files must reside in /res/raw/.
+        type: string
+      badge:
+        description: "iOS: Indicates the badge on the client app home icon."
+        type: string
+      tag:
+        description: |
+          android: Indicates whether each notification results in a new entry in the notification drawer.
+          If not set, each request creates a new notification.
+          If set, and a notification with the same tag is already being shown, the new notification replaces the existing one in the notification drawer.
+        type: string
+      color:
+        description: "android: Indicates color of the icon, expressed in #rrggbb format"
+        type: string
+      click_action:
+        description: |
+          Indicates the action associated with a user click on the notification.
+          * iOS:  Corresponds to category in the APNs payload.
+          * android: When this is set, an activity with a matching intent filter is launched when user clicks the notification.
+        type: string
+      body_loc_key:
+        description: |
+          Indicates the key to the body string for localization.
+          * iOS: Corresponds to "loc-key" in the APNs payload.
+          * android: Use the key in the app's string resources when populating this value.
+        type: string
+      body_loc_args:
+        description: |
+          Indicates the string value to replace format specifiers in the body string for localization.
+          * iOS: Corresponds to "loc-args" in the APNs payload.
+          * android:  See [Formatting and Styling](https://developer.android.com/guide/topics/resources/string-resource.html#FormattingAndStyling).
+        type: string
+      title_loc_key:
+        description: |
+          Indicates the key to the title string for localization.
+          * iOS: Corresponds to "title-loc-key" in the APNs payload.
+          * android:  Use the key in the app's string resources when populating this value.
+        type: string
+      title_loc_args:
+        description: |
+          Indicates the string value to replace format specifiers in the title string for localization.
+          * iOS: Corresponds to "title-loc-args" in the APNs payload.
+          * android: See [Formatting strings](https://developer.android.com/guide/topics/resources/string-resource.html#FormattingAndStyling).
+        type: string
+
+  Response:
+    type: object
+    description: Downstream message response body
+    properties:
+      multicast_id:
+        description: Unique ID (number) identifying the multicast message.
+        type: number
+      success:
+        description: Number of messages that were processed without an error.
+        type: number
+      failure:
+        description: Number of messages that could not be processed.
+        type: number
+      canonical_ids:
+        description: Number of results that contain a canonical registration token. See the [registration overview](https://firebase.google.com/docs/cloud-messaging/android/client#canonical-ids) for more discussion of this topic.
+        type: number
+      results:
+        type: array
+        items:
+          $ref: "#/definitions/Result"
+      message_id:
+        description: The topic message ID when FCM has successfully received the request and will attempt to deliver to all subscribed devices.
+        type: string
+
+  Result:
+    type: object
+    properties:
+      message_id:
+        description: Unique ID for each successfully processed message.
+        type: string
+      registration_id:
+        description: Canonical registration token for the client app that the message was processed and sent to. Sender should use this value as the registration token for future requests. Otherwise, the messages might be rejected.
+        type: string
+      error:
+        description: Error that occurred when processing the message for the recipient. The possible values can be found in [table 9](https://firebase.google.com/docs/cloud-messaging/http-server-ref#table9).
+        type: string
+
+securityDefinitions:
+  api_key:
+    description: Authentication key in the format key=YOUR_SERVER_KEY. Make sure this is the server key, whose value is available in your Firebase project console under Project Settings > Cloud Messaging. Android, iOS, and browser keys are rejected by FCM.
+    type: apiKey
+    name: Authorization
+    in: header
