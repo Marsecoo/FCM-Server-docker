@@ -37,7 +37,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web:2.1.13.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-logging:2.1.13.RELEASE'
     implementation 'org.projectlombok:lombok:1.18.12'
-    implementation 'com.google.firebase:firebase-admin:6.8.1'
+    implementation 'com.google.firebase:firebase-admin:6.8.1'     
+//    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
+//    runtimeOnly 'mysql:mysql-connector-java:8.0.19'
 }
 
 task increaseVersion {
