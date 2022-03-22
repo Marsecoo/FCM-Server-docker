@@ -7,6 +7,12 @@ buildscript {
         kotlin_version = "1.6.10"
         koin_version = "2.2.2"
         google_services_version = "4.3.8"
+        gson_version = "2.9.0"
+        okhttp_version = '4.9.3'
+        okhttp_interceptor_version = '4.9.3'
+        retrofit_version = '2.9.0'
+        timber_version = '4.7.1'
+        utilcodex_version = '1.23.7'
     }
 
     repositories {
