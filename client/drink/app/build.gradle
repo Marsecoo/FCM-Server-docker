@@ -67,6 +67,8 @@ dependencies {
 
     // AndroidUtilCode
     implementation "com.blankj:utilcodex:$utilcodex_version"
+
+    implementation project(path: ':common:fcm_token')
 }
 
 task increaseVersion {
