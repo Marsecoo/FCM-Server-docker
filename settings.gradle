@@ -22,3 +22,5 @@ include ':client:google:app'
 include ':common:google:chooserx'
 include ':common:google:lint'
 include ':common:google:lintchecks'
+//FCM
+include ':common:fcm_token'
