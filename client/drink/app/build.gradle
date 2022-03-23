@@ -60,13 +60,11 @@ dependencies {
     // Retrofit 2
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
 
     // Timber
     implementation "com.jakewharton.timber:timber:$timber_version"
-
-    // AndroidUtilCode
-    implementation "com.blankj:utilcodex:$utilcodex_version"
 
     implementation project(path: ':common:fcm_token')
 }
