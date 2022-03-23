@@ -1,4 +1,4 @@
-package com.example.nanohttpd;
+package org.nanohttpd.protocols.http;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;

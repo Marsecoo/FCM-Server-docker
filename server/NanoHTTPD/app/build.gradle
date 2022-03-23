@@ -65,6 +65,8 @@ dependencies {
 
     implementation project(path: ':common:fcm_token')
 
+    implementation project(path: ':common:NanoHTTPD')
+
     implementation 'com.android.support:design:+'
     implementation 'com.android.support:appcompat-v7:+'
     implementation 'com.android.support:recyclerview-v7:+'

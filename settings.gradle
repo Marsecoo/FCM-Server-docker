@@ -25,3 +25,5 @@ include ':common:google:lint'
 include ':common:google:lintchecks'
 //FCM
 include ':common:fcm_token'
+//nano server
+include ':common:NanoHTTPD'
