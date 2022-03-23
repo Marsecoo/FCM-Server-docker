@@ -46,6 +46,12 @@ android {
 }
 
 dependencies {
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    // Kotlin Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
+
     implementation project(":common:google:lintchecks")
     implementation project(":common:google::chooserx")
     implementation 'androidx.annotation:annotation:1.2.0'
