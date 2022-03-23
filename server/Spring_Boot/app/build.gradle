@@ -3,7 +3,7 @@
  */
 plugins {
     id 'java'
-    id "org.jetbrains.kotlin.jvm" version "1.6.10"
+    id "org.jetbrains.kotlin.jvm"
     id 'maven-publish'
 }
 apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/version.gradle'
@@ -41,7 +41,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web:2.1.13.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-logging:2.1.13.RELEASE'
     implementation 'org.projectlombok:lombok:1.18.12'
-    implementation 'com.google.firebase:firebase-admin:6.8.1'     
+    implementation 'com.google.firebase:firebase-admin:6.8.1'
+    implementation project(path: ':common:fcm_token')
 //    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
 //    runtimeOnly 'mysql:mysql-connector-java:8.0.19'
 }
