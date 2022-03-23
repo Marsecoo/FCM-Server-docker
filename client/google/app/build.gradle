@@ -26,6 +26,7 @@ android {
         project.version = version.versionName
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "API_HOST", '"http://127.0.0.1:8890/"'
     }
 
     buildTypes {

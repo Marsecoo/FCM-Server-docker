@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
+import android.provider.Settings
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.work.OneTimeWorkRequest
@@ -14,6 +15,9 @@ import androidx.work.WorkManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.firebase.quickstart.fcm.R
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import tw.gov.president.cks.fcm.data.FCMToken
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
@@ -105,6 +109,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private fun sendRegistrationToServer(token: String?) {
         // TODO: Implement this method to send token to your app server.
         Log.d(TAG, "sendRegistrationTokenToServer($token)")
+        token?.let {
+            val deviceId = Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
+            GlobalScope.launch {
+                ProjectNetwork.apiService.registerToken(FCMToken(deviceId, it));
+            }
+        }
     }
 
     /**
