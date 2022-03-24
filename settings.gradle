@@ -29,3 +29,5 @@ include ':common:fcm_token'
 //nano server
 include ':NanoHTTPD'
 project(":NanoHTTPD").projectDir = file("./common/NanoHTTPD/core")
+include ':katp'
+project(":katp").projectDir = file("./common/NanoHTTPD/katp")

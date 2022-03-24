@@ -6,11 +6,11 @@ import android.os.IBinder
 
 class MainService : Service() {
 
-    private var mHttpServer: HttpServer? = null
+    private var mHttpServer:  HttpServer? = null
 
     override fun onCreate() {
         super.onCreate()
-        mHttpServer = HttpServer(HTTP_IP, HTTP_PORT)
+        mHttpServer = com.ljt.katp.server.HttpServer(HTTP_IP, HTTP_PORT)
         try {
             mHttpServer?.start()
         }catch (e: Exception){
