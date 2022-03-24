@@ -16,7 +16,7 @@ rootProject.name = 'FCM_Full_Demo'
 //Server Side
 include ':server:Spring_Boot:app'
 include ':server:NanoHTTPD:app'
-
+include ':server:NanoHTTPD:katp'
 //Client Demo
 include ':client:drink:app'
 include ':client:google:app'
