@@ -16,6 +16,7 @@ rootProject.name = 'FCM_Full_Demo'
 //Server Side
 include ':server:Spring_Boot:app'
 include ':server:NanoHTTPD:app'
+
 //Client Demo
 include ':client:drink:app'
 include ':client:google:app'
@@ -26,4 +27,5 @@ include ':common:google:lintchecks'
 //FCM
 include ':common:fcm_token'
 //nano server
-include ':common:NanoHTTPD'
+include ':NanoHTTPD'
+project(":NanoHTTPD").projectDir = file("./common/NanoHTTPD/core")
