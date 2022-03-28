@@ -32,7 +32,8 @@ publishing {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'org.nanohttpd:nanohttpd:2.3.1'
+//    implementation 'org.nanohttpd:nanohttpd:2.3.1'
+    implementation 'com.gitee.l0km:nanohttpd:2.3.4'
     implementation "com.google.code.gson:gson:$gson_version"
     implementation project(path: ':common:fcm_token')
 }

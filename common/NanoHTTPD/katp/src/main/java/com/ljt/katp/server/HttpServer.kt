@@ -1,7 +1,11 @@
 package com.ljt.katp.server
 
 import com.google.gson.Gson
-import fi.iki.elonen.NanoHTTPD
+import org.nanohttpd.protocols.http.IHTTPSession
+import org.nanohttpd.protocols.http.NanoHTTPD
+import org.nanohttpd.protocols.http.request.Method
+import org.nanohttpd.protocols.http.response.Response
+import org.nanohttpd.protocols.http.response.Response.newFixedLengthResponse
 import tw.gov.president.cks.fcm.data.FCMToken
 
 class HttpServer(hostname: String?, port: Int) : NanoHTTPD(hostname, port) {
@@ -28,7 +32,7 @@ class HttpServer(hostname: String?, port: Int) : NanoHTTPD(hostname, port) {
         val jsonbaodys : Map<String?, String?> = HashMap()
         session.parseBody(jsonbaodys)
        var jsonstring= jsonbaodys["postData"]
-        if (method==Method.PUT){
+        if (method== Method.PUT){
             jsonstring=jsonbaodys["content"];
         }
         val urlencoded_params = session.parameters
