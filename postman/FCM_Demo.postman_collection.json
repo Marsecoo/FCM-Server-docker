@@ -1,0 +1,104 @@
+{
+	"variables": [],
+	"info": {
+		"name": "FCM_Demo",
+		"_postman_id": "d1a6fcfe-f849-fd58-394b-a6b5cc59f2f2",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "old_api_urlencoded_type",
+			"request": {
+				"url": {
+					"raw": "http://127.0.0.1:8080/2/holleMan?name=大人啊",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"2",
+						"holleMan"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "大人啊",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "registerToken_urlencoded_type",
+			"request": {
+				"url": "http://127.0.0.1:8080/2/registerToken",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "deviceId",
+							"value": "retwretwret",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "fcmToken",
+							"value": "ytryjgfjfd",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "registerToken_api_json_type",
+			"request": {
+				"url": "http://127.0.0.1:8080/2/registerToken",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"deviceId\":\"qerewrtrtwettw\",\n\t\"fcmToken\":\"ewqrewrqewrreqqtqgdssdfsdgs\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
