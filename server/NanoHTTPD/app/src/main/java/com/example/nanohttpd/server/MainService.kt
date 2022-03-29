@@ -3,26 +3,16 @@ package com.example.nanohttpd.server
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import android.util.Log
-import com.example.nanohttpd.SimpleServer
-import java.io.IOException
+import com.ljt.katp.server.HttpServer
 
 class MainService : Service() {
-    private var mHttpServer:  SimpleServer? = null
+    private var mHttpServer:  HttpServer? = null
 
     override fun onCreate() {
         super.onCreate()
-        mHttpServer =  SimpleServer()
-        Log.e("MainService", "The server Create")
+        mHttpServer =  HttpServer("127.0.0.1", 8080)
         try {
-            Log.e("MainService", "The server start.")
-            // 因为程序模拟的是html放置在asset目录下，
-            // 所以在这里存储一下AssetManager的指针。
-//            mHttpServer?.asset_mgr = this.assets
             mHttpServer?.start()
-            Log.e("MainService", "The server started.")
-        } catch (ioe: IOException) {
-            Log.e("MainService", "The server could not start.")
         }catch (e: Exception){
             e.printStackTrace()
             val service = Intent(this, MainService::class.java)
@@ -42,5 +32,4 @@ class MainService : Service() {
         mHttpServer?.stop()
         super.onDestroy()
     }
-
 }

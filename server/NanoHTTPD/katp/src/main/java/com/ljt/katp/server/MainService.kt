@@ -5,12 +5,11 @@ import android.content.Intent
 import android.os.IBinder
 
 class MainService : Service() {
-
     private var mHttpServer:  HttpServer? = null
 
     override fun onCreate() {
         super.onCreate()
-        mHttpServer = com.ljt.katp.server.HttpServer(HTTP_IP, HTTP_PORT)
+        mHttpServer = com.ljt.katp.server.HttpServer("127.0.0.1", 8080)
         try {
             mHttpServer?.start()
         }catch (e: Exception){
@@ -32,5 +31,4 @@ class MainService : Service() {
         mHttpServer?.stop()
         super.onDestroy()
     }
-
 }

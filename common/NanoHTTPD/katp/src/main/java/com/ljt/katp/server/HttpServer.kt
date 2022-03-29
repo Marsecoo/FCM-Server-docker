@@ -21,6 +21,9 @@ class HttpServer(hostname: String?, port: Int) : NanoHTTPD(hostname, port) {
         }
     }
 
+    //Ref : https://blog.csdn.net/rookie_wei/article/details/73614493
+    //https://www.796t.com/post/YWt2ZTA=.html
+    //TODO : add load index.html from AssetManager or Res folder
     private fun processSessionInfo(session: IHTTPSession): Response {
         val method =session.method
         val uri= session.uri

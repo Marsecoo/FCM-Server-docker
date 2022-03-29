@@ -65,7 +65,8 @@ dependencies {
 
     implementation project(path: ':common:fcm_token')
 
-    implementation project(path: ':NanoHTTPD')
+    implementation 'com.gitee.l0km:nanohttpd:2.3.4'
+    implementation project(path: ':katp')
 
     implementation 'com.android.support:design:+'
     implementation 'com.android.support:appcompat-v7:+'
