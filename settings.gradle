@@ -13,9 +13,14 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = 'FCM_Full_Demo'
-//Server Side
+//Server Side : Spring_Boot
 include ':server:Spring_Boot:app'
-include ':server:NanoHTTPD:katp'
+//Server Side : NanoHTTPD
+include ':server:NanoHTTPD'
+project(":server:NanoHTTPD").projectDir = file("./server/NanoHTTPD/katp")
+//Server Side : AndServer
+include ':server:AndServer'
+project(":server:AndServer").projectDir = file("./server/AndServer/sample")
 //Client Demo
 include ':client:drink:app'
 include ':client:google:app'
@@ -38,7 +43,3 @@ include ':NanoHTTPD'
 project(":NanoHTTPD").projectDir = file("./common/NanoHTTPD/core")
 include ':katp'
 project(":katp").projectDir = file("./common/NanoHTTPD/katp")
-
-//AndServer
-include ':server:AndServer'
-project(":server:AndServer").projectDir = file("./server/AndServer/sample")
