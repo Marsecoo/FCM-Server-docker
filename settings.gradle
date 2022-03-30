@@ -23,6 +23,10 @@ include ':client:google:app'
 include ':common:google:chooserx'
 include ':common:google:lint'
 include ':common:google:lintchecks'
+include ':common:AndServer:annotation'
+include ':common:AndServer:api'
+include ':common:AndServer:plugin'
+include ':common:AndServer:processor'
 //FCM
 include ':common:fcm_token'
 //nano server
@@ -30,3 +34,7 @@ include ':NanoHTTPD'
 project(":NanoHTTPD").projectDir = file("./common/NanoHTTPD/core")
 include ':katp'
 project(":katp").projectDir = file("./common/NanoHTTPD/katp")
+
+//AndServer
+include ':server:AndServer'
+project(":server:AndServer").projectDir = file("./server/AndServer/sample")
