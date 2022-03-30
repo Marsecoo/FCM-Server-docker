@@ -23,6 +23,7 @@ dependencies {
     implementation project(':common:AndServer:api')
     annotationProcessor project(':common:AndServer:processor')
     implementation project(':model_entity:ReturnData')
+    implementation project(path: ':model_entity:fcm_token')
 
     implementation deps.android.material
     implementation deps.android.compat

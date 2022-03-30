@@ -17,7 +17,7 @@ android {
         versionName version.versionName
         project.version = version.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "API_HOST", '"http://127.0.0.1:8890/"'
+        buildConfigField "String", "API_HOST", '"http://127.0.0.1:8080/"'
     }
 
     buildTypes {

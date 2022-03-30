@@ -29,6 +29,7 @@ import com.yanzhenjie.andserver.annotation.RequestMapping;
 import com.yanzhenjie.andserver.annotation.RequestMethod;
 import com.yanzhenjie.andserver.annotation.RequestParam;
 import com.yanzhenjie.andserver.annotation.RestController;
+import com.yanzhenjie.andserver.framework.body.JsonBody;
 import com.yanzhenjie.andserver.http.HttpRequest;
 import com.yanzhenjie.andserver.http.HttpResponse;
 import com.yanzhenjie.andserver.http.cookie.Cookie;
@@ -37,6 +38,7 @@ import com.yanzhenjie.andserver.http.session.Session;
 import com.yanzhenjie.andserver.sample.component.LoginInterceptor;
 import com.yanzhenjie.andserver.sample.model.UserInfo;
 import com.yanzhenjie.andserver.sample.util.FileUtils;
+import com.yanzhenjie.andserver.sample.util.JsonUtils;
 import com.yanzhenjie.andserver.sample.util.Logger;
 import com.yanzhenjie.andserver.util.MediaType;
 
@@ -93,10 +95,15 @@ class TestController {
                  @RequestParam(name = "password") String password) {
         Session session = request.getValidSession();
         session.setAttribute(LoginInterceptor.LOGIN_ATTRIBUTE, true);
-
-        Cookie cookie = new Cookie("account", account + "=" + password);
-        response.addCookie(cookie);
-        return "Login successful.";
+        if (account.equals("123") && password.equals("123")) {
+            Cookie cookie = new Cookie("account", account + "=" + password);
+            response.addCookie(cookie);
+            return "Login successful.";
+        }else{
+            String body = JsonUtils.failedJson(response.getStatus(), "Login  fail");
+            response.setBody(new JsonBody(body));
+            return "Login  fail";
+        }
     }
 
     @Addition(stringType = "login", booleanType = true)

@@ -40,6 +40,7 @@ ext {
 
         poet   : 'com.squareup:javapoet:1.12.1',
         loading: 'com.yanzhenjie:loading:1.0.0',
-        json   : 'com.alibaba:fastjson:1.1.71.android'
+//        json   : 'com.alibaba:fastjson:1.1.71.android'
+        json   : 'com.alibaba:fastjson:1.2.80'
     ]
 }
