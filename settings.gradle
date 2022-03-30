@@ -27,7 +27,10 @@ include ':common:AndServer:annotation'
 include ':common:AndServer:api'
 include ':common:AndServer:plugin'
 include ':common:AndServer:processor'
-//FCM
+//common model_entity library : AndServer Sample
+include ':model_entity:ReturnData'
+project(":model_entity:ReturnData").projectDir = file("./common/AndServer/model_entity")
+//common model_entity library : FCM
 include ':model_entity:fcm_token'
 project(":model_entity:fcm_token").projectDir = file("./common/fcm_token")
 //nano server
