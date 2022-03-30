@@ -28,7 +28,8 @@ include ':common:AndServer:api'
 include ':common:AndServer:plugin'
 include ':common:AndServer:processor'
 //FCM
-include ':common:fcm_token'
+include ':model_entity:fcm_token'
+project(":model_entity:fcm_token").projectDir = file("./common/fcm_token")
 //nano server
 include ':NanoHTTPD'
 project(":NanoHTTPD").projectDir = file("./common/NanoHTTPD/core")
