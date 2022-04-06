@@ -6,7 +6,9 @@ ext {
         android       : 'com.android.application',
         androidLibrary: 'com.android.library',
         androidMaven  : 'com.github.dcendents.android-maven',
-        andServer     : 'com.yanzhenjie.andserver'
+        andServer     : 'com.yanzhenjie.andserver',
+        kotlin_android  : 'kotlin-android',
+        kapt  : 'kotlin-kapt',
     ]
 
     androidBuild = [
@@ -37,7 +39,7 @@ ext {
             httpcore   : "com.yanzhenjie.apache:httpcore:4.4.14.1",
             fileupload : "com.yanzhenjie.apache:fileupload:1.4",
         ],
-
+        gson   : "com.google.code.gson:gson:$gson_version",
         poet   : 'com.squareup:javapoet:1.12.1',
         loading: 'com.yanzhenjie:loading:1.0.0',
 //        json   : 'com.alibaba:fastjson:1.1.71.android'
