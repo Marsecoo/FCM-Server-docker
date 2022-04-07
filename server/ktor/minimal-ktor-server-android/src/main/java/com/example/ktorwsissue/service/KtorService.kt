@@ -2,36 +2,15 @@ package com.example.ktorwsissue.service
 
 import android.app.Service
 import android.content.Intent
-import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import com.example.ktorwsissue.Constant
 import com.example.ktorwsissue.server.ServerFactory
-import io.ktor.application.*
-import io.ktor.features.*
-import io.ktor.http.*
-import io.ktor.http.cio.websocket.*
-import io.ktor.response.*
-import io.ktor.routing.*
 import io.ktor.server.engine.*
-import io.ktor.server.netty.*
-import io.ktor.websocket.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.nio.charset.Charset
 import java.util.logging.Logger
-import io.ktor.application.call
-import io.ktor.application.install
-import io.ktor.features.CallLogging
-import io.ktor.features.ContentNegotiation
-import io.ktor.features.DefaultHeaders
-import io.ktor.gson.gson
-import io.ktor.request.path
-import io.ktor.response.respond
-import io.ktor.server.engine.embeddedServer
-import io.ktor.server.netty.Netty
-import org.slf4j.event.Level
 
 class KtorService : Service() {
     private val logger = Logger.getLogger("KtorService")

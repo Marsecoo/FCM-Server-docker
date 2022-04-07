@@ -22,8 +22,8 @@ project(":server:NanoHTTPD").projectDir = file("./server/NanoHTTPD/katp")
 include ':server:AndServer'
 project(":server:AndServer").projectDir = file("./server/AndServer/sample")
 //Server Side : ktor
-include ':server:ktor'
-project(":server:ktor").projectDir = file("./server/ktor/minimal-ktor-server-android")
+include ':server:ktorServer'
+project(":server:ktorServer").projectDir = file("./server/ktor/minimal-ktor-server-android")
 //Client Demo
 include ':client:drink:app'
 include ':client:google:app'
@@ -46,3 +46,6 @@ include ':NanoHTTPD'
 project(":NanoHTTPD").projectDir = file("./common/NanoHTTPD/core")
 include ':katp'
 project(":katp").projectDir = file("./common/NanoHTTPD/katp")
+//ktor server
+include ':ktor'
+project(":ktor").projectDir = file("./common/ktor")
