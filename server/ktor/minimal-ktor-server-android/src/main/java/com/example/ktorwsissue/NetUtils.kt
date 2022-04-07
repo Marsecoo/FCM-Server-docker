@@ -3,7 +3,7 @@ package com.example.ktorwsissue
 import java.net.NetworkInterface
 
 object NetUtils  {
-  fun getIpAddressInLocalNetwork(): String? {
+    fun getIpAddressInLocalNetwork(): String? {
         val networkInterfaces = NetworkInterface.getNetworkInterfaces().iterator().asSequence()
         val localAddresses = networkInterfaces.flatMap {
             it.inetAddresses.asSequence()

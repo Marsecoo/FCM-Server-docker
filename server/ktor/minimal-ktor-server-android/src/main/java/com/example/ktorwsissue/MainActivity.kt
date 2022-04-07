@@ -31,19 +31,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-//    private val coroutineContext = Dispatchers.IO
-
-    private val logger = Logger.getLogger("KtorServer")
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
+   override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val i = Intent(this, KtorService::class.java)
-        i.putExtra(HTTP_PORT, 7070)
+        i.putExtra(HTTP_PORT, 8080)
         startService(i)
         findViewById<TextView>(R.id.serverStatusText).text = getString(R.string.serverStartedMessage)
-
         val localIpAddress = NetUtils.getIpAddressInLocalNetwork()
         if (localIpAddress != null) {
             findViewById<TextView>(R.id.ipAddressText).text =

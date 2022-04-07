@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import com.example.ktorwsissue.Constant
+import com.example.ktorwsissue.server.ServerFactory
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
@@ -35,49 +36,9 @@ import org.slf4j.event.Level
 class KtorService : Service() {
     private val logger = Logger.getLogger("KtorService")
     private val coroutineContext = Dispatchers.IO
-    private var HTTP_PORT = 8080
+    private var HTTP_PORT = 5555
     private val server : ApplicationEngine by lazy {
-        embeddedServer(Netty, HTTP_PORT, watchPaths = emptyList()) {
-            install(WebSockets)
-            install(DefaultHeaders) {
-                header("X-Developer", "Baeldung")
-            }
-            install(CallLogging) {
-                level = Level.DEBUG
-                filter { call -> call.request.path().startsWith("/author") }
-                filter { call -> call.request.path().startsWith("/registerToken") }
-            }
-            install(ContentNegotiation) {
-                gson {
-                    setPrettyPrinting()
-                }
-            }
-            routing {
-                get("/") {
-                    logger.info("Show get Get request  ${call.request}")
-                    call.respondText("All good here in ${Build.MODEL}", ContentType.Text.Plain)
-                }
-                post("/registerToken") {
-                    logger.info("Show get Post request ${call.request}")
-                    call.respond(HttpStatusCode.OK)
-                }
-
-                webSocket("/ws") {
-                    logger.info("Sending message to client...")
-                    send("foo")
-                    val receivedMessage = incoming.receive()
-                    val messageFormatted = if (receivedMessage.frameType == FrameType.TEXT) {
-                        receivedMessage.readBytes().toString(Charset.defaultCharset())
-                    } else {
-                        "<non-text frame>"
-                    }
-                    logger.info("Got message from client: $messageFormatted")
-
-                    logger.info("Closing connection...")
-                    close()
-                }
-            }
-        }
+        ServerFactory.getServer(HTTP_PORT)
     }
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -93,7 +54,6 @@ class KtorService : Service() {
         //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         return null
     }
-
 
     override fun onCreate() {
         Log.e("KtorService", "onCreate")

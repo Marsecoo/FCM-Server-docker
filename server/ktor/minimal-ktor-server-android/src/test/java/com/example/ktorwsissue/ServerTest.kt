@@ -1,5 +1,7 @@
 package com.example.ktorwsissue
 
+import com.example.ktorwsissue.server.ServerFactory
+import io.ktor.application.*
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.okhttp.OkHttp
@@ -19,7 +21,7 @@ class ServerTest {
             .build()
     }
 
-    private val serverIPAddress = "192.168.1.110"
+    private val serverIPAddress = NetUtils.getIpAddressInLocalNetwork()
 
     private val logger: Logger = Logger.getLogger("Client")
 
@@ -38,5 +40,13 @@ class ServerTest {
             logger.info("Got message $incomingMessage")
             send("bye")
         }
+    }
+
+    //FIXME cannot work !!
+    @Test
+    fun startServer() = runBlocking {
+        val server = ServerFactory.getServer(8080)
+        logger.info("Starting server...")
+        server.start(wait = true)
     }
 }
