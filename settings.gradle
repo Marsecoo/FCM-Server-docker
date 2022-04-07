@@ -21,6 +21,9 @@ project(":server:NanoHTTPD").projectDir = file("./server/NanoHTTPD/katp")
 //Server Side : AndServer
 include ':server:AndServer'
 project(":server:AndServer").projectDir = file("./server/AndServer/sample")
+//Server Side : ktor
+include ':server:ktor'
+project(":server:ktor").projectDir = file("./server/ktor/minimal-ktor-server-android")
 //Client Demo
 include ':client:drink:app'
 include ':client:google:app'

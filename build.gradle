@@ -5,7 +5,9 @@ buildscript {
         compileSdkVersion = 29
         targetSdkVersion = compileSdkVersion
         minSdkVersion = 19
-        kotlin_version = "1.6.10"
+        kotlin_version = "1.6.20"
+        kotlin_coroutines_version = "1.6.1"
+        kotlin_ktor_version = "1.6.2"
         koin_version = "2.2.2"
         google_services_version = "4.3.8"
         gson_version = "2.9.0"
