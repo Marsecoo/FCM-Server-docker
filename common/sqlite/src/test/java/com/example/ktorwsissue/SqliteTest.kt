@@ -14,7 +14,8 @@ class SqliteTest {
 
     @Test
     fun testPerson() = runBlocking {
-        val sp = SQLite("./sqlitejava.db")
+//        val sp = SQLite("./sqlitejava.db")
+        val sp = SQLite.getSQLite("./sqlitejava.db")
         val table_name = "person"
         val colum_id = "_id"
         val CONFLICT_VALUES =  arrayOf("", " OR ROLLBACK ", " OR ABORT ", " OR FAIL ", " OR IGNORE ", " OR REPLACE ")
@@ -130,7 +131,8 @@ class SqliteTest {
     fun testFCMToken() = runBlocking {
         val table_name = FCMToken::class.simpleName!!.lowercase(Locale.getDefault())
         logger.info("Show table_name   $table_name")
-        val sp = SQLite("./${table_name}.db")
+//        val sp = SQLite("./${table_name}.db")
+        val sp = SQLite.getSQLite("./${table_name}.db")
         val colum_id = "_id"
         val CONFLICT_VALUES =
             arrayOf("", " OR ROLLBACK ", " OR ABORT ", " OR FAIL ", " OR IGNORE ", " OR REPLACE ")

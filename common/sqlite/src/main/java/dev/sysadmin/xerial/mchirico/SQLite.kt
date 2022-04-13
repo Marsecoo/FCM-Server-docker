@@ -1,5 +1,7 @@
 package dev.sysadmin.xerial.mchirico
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import java.lang.Exception
 import java.sql.Connection
 import java.sql.DriverManager
@@ -10,45 +12,66 @@ import kotlin.reflect.KProperty1
 
 //Ref : https://gist.github.com/mchirico/4751124
 class SQLite {
+    private val workscope = CoroutineScope(Dispatchers.IO)
     private val logger = Logger.getLogger("SQLite")
-    private var connection: Connection? = null
-    private var statement: Statement? = null
+    private lateinit var connection: Connection
+    private lateinit var statement: Statement
     private var rs: ResultSet? = null
+    companion object {
 
-    constructor(File: String) {
+        private val LOCK = Any()
+        private var instance: SQLite? = null
+
+        @JvmStatic
+        fun getSQLite(file_with_path: String): SQLite {
+            synchronized(LOCK) {
+                if (instance == null) {
+                    instance = SQLite(file_with_path)
+                }
+            }
+            return instance!!
+        }
+    }
+
+    private constructor(File: String) {
         try {
             Class.forName("org.sqlite.JDBC")
             connection = DriverManager.getConnection("jdbc:sqlite:$File")
             // example of how you would do it in memory
             // Connection connection =
             // DriverManager.getConnection("jdbc:sqlite::memory:");
-            statement = connection!!.createStatement()
-            statement!!.setQueryTimeout(30)
+            statement = connection.createStatement()
+            statement.setQueryTimeout(30)
         } catch (e: Exception) {
-            logger.info("SQLite init error ${e.message}")
+            logger.info("SQLite init JDBC error ${e.message}")
             System.err.println(e.message)
         }
     }
 
-    constructor(File: String, TimeOut: Int) {
+    private constructor(File: String, TimeOut: Int) {
         try {
             Class.forName("org.sqlite.JDBC")
             connection = DriverManager.getConnection("jdbc:sqlite:$File")
             // example of how you would do it in memory
             // Connection connection =
             // DriverManager.getConnection("jdbc:sqlite::memory:");
-            statement = connection!!.createStatement()
-            statement!!.setQueryTimeout(TimeOut)
+            statement = connection.createStatement()
+            statement.setQueryTimeout(TimeOut)
         } catch (e: Exception) {
-            logger.info("SQLite init error ${e.message}")
+            logger.info("SQLite init JDBC error ${e.message}")
             System.err.println(e.message)
         }
     }
 
-    fun execSQL(s: String?) {
-        logger.info("SQLite executeUpdate get command $s")
+    fun initTable(table_name: String,command: String ) {
+         execSQL("drop table if exists $table_name")
+         execSQL(command)
+    }
+
+    fun execSQL(command: String) {
+        logger.info("SQLite executeUpdate get command $command")
         try {
-            statement!!.executeUpdate(s)
+            statement!!.executeUpdate(command)
             /*
              * statement.executeUpdate("drop table if exists person"); statement
              * .executeUpdate("create table person (id integer, name string)");
@@ -61,9 +84,9 @@ class SQLite {
         }
     }
 
-    fun select(s: String?) {
+    fun select(command: String) {
         try {
-            rs = statement!!.executeQuery(s)
+            rs = statement.executeQuery(command)
             while (rs!!.next()) {
                 // read the result set
                 val rsmd = rs!!.getMetaData()
@@ -85,7 +108,7 @@ class SQLite {
 
     fun close() {
         try {
-            if (connection != null) connection!!.close()
+            if (connection != null) connection.close()
         } catch (e: Exception) {
             logger.info("SQLite close error ${e.message}")
             println(e.message)
