@@ -35,6 +35,8 @@ include ':common:AndServer:annotation'
 include ':common:AndServer:api'
 include ':common:AndServer:plugin'
 include ':common:AndServer:processor'
+include ':sqlite'
+project(":sqlite").projectDir = file("./common/sqlite")
 //common model_entity library : AndServer Sample
 include ':model_entity:ReturnData'
 project(":model_entity:ReturnData").projectDir = file("./common/AndServer/model_entity")
