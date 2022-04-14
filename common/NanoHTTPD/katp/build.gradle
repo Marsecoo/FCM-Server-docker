@@ -9,8 +9,8 @@ project.group = 'com.weng'
 project.version = version.versionName
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility  = JavaVersion.VERSION_11
+    java.sourceCompatibility = JavaVersion.VERSION_11
+    java.targetCompatibility  = JavaVersion.VERSION_11
 }
 
 tasks.withType(JavaCompile) {
@@ -19,6 +19,12 @@ tasks.withType(JavaCompile) {
 
 jar {
     manifest {
+    }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+    kotlinOptions {
+        jvmTarget = "11"
     }
 }
 
@@ -31,11 +37,14 @@ publishing {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 //    implementation 'org.nanohttpd:nanohttpd:2.3.1'
     implementation 'com.gitee.l0km:nanohttpd:2.3.4'
     implementation "com.google.code.gson:gson:$gson_version"
     implementation project(path: ':model_entity:fcm_token')
+    implementation project(path: ':sqlite')
 }
 
 task increaseVersion {

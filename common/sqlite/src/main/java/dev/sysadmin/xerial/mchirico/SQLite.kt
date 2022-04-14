@@ -17,6 +17,7 @@ class SQLite {
     private lateinit var connection: Connection
     private lateinit var statement: Statement
     private var rs: ResultSet? = null
+
     companion object {
 
         private val LOCK = Any()
@@ -63,9 +64,9 @@ class SQLite {
         }
     }
 
-    fun initTable(table_name: String,command: String ) {
-         execSQL("drop table if exists $table_name")
-         execSQL(command)
+    fun initTable(table_name: String, command: String) {
+        execSQL("drop table if exists $table_name")
+        execSQL(command)
     }
 
     fun execSQL(command: String) {
