@@ -1,6 +1,9 @@
 apply plugin: plugin.android
 apply plugin: plugin.andServer
-
+ext {
+    Debug_properties_file = "https://raw.githubusercontent.com/CMingTseng/Useful_Gradle/master/debug.properties"
+    Release_properties_file = Debug_properties_file
+}
 android {
     compileSdkVersion androidBuild.compileSdkVersion
     buildToolsVersion androidBuild.buildToolsVersion
@@ -11,6 +14,36 @@ android {
         targetSdkVersion androidBuild.sampleTargetSdkVersion
         versionCode androidBuild.versionCode
         versionName androidBuild.versionName
+    }
+
+    signingConfigs {
+        Properties props = new Properties()
+        debug {
+            props.load(new URL(this.ext.Debug_properties_file).openStream())
+            keyAlias "${props['alias']}"
+            keyPassword "${props['key_password']}"
+            storePassword "${props['keystore_password']}"
+            storeFile file(buildDir.toString() + File.separator + "${props['keystore_file_name']}" + "${props['keystore_file_type']}")
+        }
+
+        release {
+            props.load(new URL(this.ext.Release_properties_file).openStream())
+            keyAlias "${props['alias']}"
+            keyPassword "${props['key_password']}"
+            storePassword "${props['keystore_password']}"
+            storeFile file(buildDir.toString() + File.separator + "${props['keystore_file_name']}" + "${props['keystore_file_type']}")
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
 
     compileOptions {
