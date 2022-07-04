@@ -6,7 +6,7 @@ buildscript {
         compileSdkVersion = 29
         targetSdkVersion = compileSdkVersion
         minSdkVersion = 19
-        kotlin_version = "1.6.20"
+        kotlin_version = "1.6.21"
         kotlin_coroutines_version = "1.6.1"
         kotlin_ktor_version = "1.6.2"
         koin_version = "2.2.2"
