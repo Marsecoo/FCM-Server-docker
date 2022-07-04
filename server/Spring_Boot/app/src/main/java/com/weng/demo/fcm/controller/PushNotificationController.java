@@ -2,7 +2,6 @@ package com.weng.demo.fcm.controller;
 
 import com.weng.demo.fcm.model.PushNotificationRequest;
 import com.weng.demo.fcm.model.PushNotificationResponse;
-import com.weng.demo.fcm.service.FCMService;
 import com.weng.demo.fcm.service.PushNotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tw.gov.president.cks.fcm.data.FCMToken;
 
 /**
  * @author Jason Weng

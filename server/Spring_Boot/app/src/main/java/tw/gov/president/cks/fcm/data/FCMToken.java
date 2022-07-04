@@ -1,4 +1,4 @@
-package com.weng.demo.fcm.controller;
+package tw.gov.president.cks.fcm.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
