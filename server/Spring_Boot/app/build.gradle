@@ -43,7 +43,7 @@ dependencies {
     implementation 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
     implementation 'com.google.firebase:firebase-admin:6.8.1'
-//    implementation project(path: ':model_entity:fcm_token')
+    implementation project(path: ':model_entity:fcm_token')
 //    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
 //    runtimeOnly 'mysql:mysql-connector-java:8.0.19'
     implementation 'com.google.code.gson:gson:2.9.0'
