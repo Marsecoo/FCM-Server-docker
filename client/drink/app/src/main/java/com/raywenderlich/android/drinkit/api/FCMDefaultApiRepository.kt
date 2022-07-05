@@ -1,16 +1,15 @@
-package com.raywenderlich.android.drinkit
+package com.raywenderlich.android.drinkit.api
 
 import retrofit2.Response
-import timber.log.Timber
 import tw.gov.president.cks.fcm.data.FCMToken
 
-class ApiRepository(private val apiService: ApiService) {
+class FCMDefaultApiRepository(private val api: FCMDefaultApiService) {
     companion object {
         const val MEDIA_TYPE_JSON = "application/json"
     }
 
     suspend fun registerToken(request: FCMToken): Response<Void> {
-        return apiService.registerToken(request)
+        return api.registerToken(request)
     }
 }
 

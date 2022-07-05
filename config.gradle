@@ -13,7 +13,7 @@ ext {
 
     androidBuild = [
         applicationId          : 'com.yanzhenjie.andserver.sample',
-        compileSdkVersion      : 29,
+        compileSdkVersion      : 32,
         buildToolsVersion      : '30.0.3',
 
         libraryMinSdkVersion   : 9,

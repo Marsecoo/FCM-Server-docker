@@ -6,7 +6,7 @@ plugins {
 }
 apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/version.gradle'
 def version = this.ext.default_version()
-
+project.version =version.versionName
 ext {
     Debug_properties_file = "https://raw.githubusercontent.com/CMingTseng/Useful_Gradle/master/debug.properties"
     Release_properties_file = Debug_properties_file
@@ -21,9 +21,9 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode version.versionCode.toInteger()
         versionName version.versionName
-        project.version = version.versionName
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "API_HOST", '"http://127.0.0.1:8080/"'
+        buildConfigField "String", "API_HOST", '"http://192.168.15.241:8890/"'
     }
 
     signingConfigs {
@@ -71,6 +71,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
 
+    implementation 'androidx.multidex:multidex:2.0.1'
     // Support Libraries
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
@@ -83,6 +84,8 @@ dependencies {
     // TUTORIAL DEPENDENCIES HERE
     implementation 'com.google.firebase:firebase-analytics:17.2.3'
     implementation 'com.google.firebase:firebase-messaging:20.1.3'
+
+    implementation 'androidx.work:work-runtime:2.5.0'
 
     // Gson
     implementation "com.google.code.gson:gson:$gson_version"

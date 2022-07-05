@@ -1,16 +1,15 @@
-package com.raywenderlich.android.drinkit
+package com.raywenderlich.android.drinkit.di
 
+import android.content.IntentFilter
+import android.net.ConnectivityManager
+import com.raywenderlich.android.drinkit.BuildConfig
+import com.raywenderlich.android.drinkit.api.FCMDefaultApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import tw.gov.president.cks.fcm.Constant
 import java.util.concurrent.TimeUnit
-
-object ProjectNetwork {
-    val apiService by lazy {
-        provideApiService( provideOkHttpClient())
-    }
-}
 
 fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
     val httpLoggingInterceptor = HttpLoggingInterceptor()
@@ -30,13 +29,13 @@ fun provideOkHttpClient(): OkHttpClient {
         .build()
 }
 
-fun provideApiService(okHttpClient: OkHttpClient): ApiService {
+fun provideApiService(okHttpClient: OkHttpClient): FCMDefaultApiService {
     return Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .client(okHttpClient)
         .baseUrl(BuildConfig.API_HOST)
         .build()
-        .create(ApiService::class.java)
+        .create(FCMDefaultApiService::class.java)
 }
 
 

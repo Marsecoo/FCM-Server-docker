@@ -32,8 +32,9 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.drinkit
+package com.raywenderlich.android.drinkit.service
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
@@ -43,21 +44,30 @@ import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.raywenderlich.android.drinkit.api.ProjectNetwork
+import com.raywenderlich.android.drinkit.R
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tw.gov.president.cks.fcm.Constant
 import tw.gov.president.cks.fcm.data.FCMToken
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
+    companion object {
+        private const val TAG = "FirebaseMessagingService"
+    }
     private var broadcaster: LocalBroadcastManager? = null
     private val processLater = false
+
 
     override fun onCreate() {
         broadcaster = LocalBroadcastManager.getInstance(this)
     }
 
     override fun onNewToken(token: String) {
-        Log.d(TAG, "Refreshed token: $token")
+        Log.e(TAG, "Refreshed token: $token")
+        val info = Intent("FirebaseMessaging")
+        info.putExtra(Constant.FCM_TOKEN, token)
+        localsendBroadcast(info)
         val deviceId = Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
         getSharedPreferences("_", MODE_PRIVATE).edit().putString(Constant.FCM_TOKEN, token).apply()
         GlobalScope.launch {
@@ -67,21 +77,35 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
-
-        Log.d(TAG, "From: ${remoteMessage.from}")
-
+        Log.e(TAG, "onMessageReceived From: ${remoteMessage.from}")
+        val info = Intent(Constant.FIREBASE_MESSAGING_REMOTE_MESSAGE)
+        info.putExtra(Constant.REMOTE_MESSAGE_RAW, remoteMessage)
+        localsendBroadcast(info)
 
         if (/* Check if data needs to be processed by long running job */ processLater) {
             //scheduleJob()
             Log.d(TAG, "executing schedule job")
         } else {
             // Handle message within 10 seconds
+            Log.e(TAG, "To handleNow(remoteMessage) ")
             handleNow(remoteMessage)
         }
     }
 
+    @SuppressLint("LogNotTimber")
     private fun handleNow(remoteMessage: RemoteMessage) {
         val handler = Handler(Looper.getMainLooper())
+        Log.e(TAG, "handleNow RemoteMessage  $remoteMessage")
+        Log.e(TAG, "handleNow RemoteMessage  MessageType${remoteMessage.getMessageType()}")
+
+        val notification = remoteMessage.notification
+        notification?.let {
+            Log.e(TAG, "handleNow RemoteMessage  Notification${it}")
+        }
+        val data = remoteMessage.data
+        data?.let {
+            Log.e(TAG, "handleNow RemoteMessage  data${it}")
+        }
 
         handler.post {
             Toast.makeText(
@@ -93,12 +117,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             remoteMessage.notification?.let {
                 val intent = Intent("MyData")
                 intent.putExtra("message", remoteMessage.data["text"])
-                broadcaster?.sendBroadcast(intent)
+                localsendBroadcast(intent)
             }
         }
     }
 
-    companion object {
-        private const val TAG = "MyFirebaseMessagingS"
+    private fun localsendBroadcast(info:Intent) {
+        broadcaster?.sendBroadcast(info)
     }
 }
