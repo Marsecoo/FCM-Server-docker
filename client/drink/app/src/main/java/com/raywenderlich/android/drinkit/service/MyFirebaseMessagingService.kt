@@ -44,7 +44,7 @@ import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.raywenderlich.android.drinkit.api.ProjectNetwork
+import com.raywenderlich.android.drinkit.api.FCMManager
 import com.raywenderlich.android.drinkit.R
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -70,9 +70,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         localsendBroadcast(info)
         val deviceId = Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
         getSharedPreferences("_", MODE_PRIVATE).edit().putString(Constant.FCM_TOKEN, token).apply()
-        GlobalScope.launch {
-            ProjectNetwork.apiService.registerToken(FCMToken(deviceId, token));
-        }
+        FCMManager.registerToken(deviceId,token)
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {

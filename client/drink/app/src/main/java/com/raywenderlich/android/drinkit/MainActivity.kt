@@ -37,7 +37,6 @@ package com.raywenderlich.android.drinkit
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -48,9 +47,8 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
-import com.raywenderlich.android.drinkit.api.ProjectNetwork
+import com.raywenderlich.android.drinkit.api.FCMManager
 import com.raywenderlich.android.drinkit.di.provideFCMIntentFilter
-import com.raywenderlich.android.drinkit.service.MyFirebaseMessagingService
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -86,9 +84,7 @@ class MainActivity : AppCompatActivity() {
                         token?.let {
                             val deviceId = Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
                             getSharedPreferences("_", MODE_PRIVATE).edit().putString(Constant.FCM_TOKEN, token).apply()
-                            GlobalScope.launch {
-                                ProjectNetwork.apiService.registerToken(FCMToken(deviceId, it ));
-                            }
+                            FCMManager.registerToken(deviceId,it)
                         }    // Log and toast
                         val msg = getString(R.string.token_prefix, token)
                         Log.d(TAG, msg)
