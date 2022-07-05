@@ -1,4 +1,4 @@
-package com.raywenderlich.android.drinkit.schedule
+package tw.gov.president.cks.fcm.schedule
 import android.util.Log
 import androidx.work.Worker
 import android.content.Context

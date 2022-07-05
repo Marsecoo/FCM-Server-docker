@@ -37,23 +37,23 @@ package com.raywenderlich.android.drinkit
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
-import com.raywenderlich.android.drinkit.api.FCMManager
-import com.raywenderlich.android.drinkit.di.provideFCMIntentFilter
+import com.google.firebase.messaging.RemoteMessage
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import tw.gov.president.cks.fcm.Constant
-import tw.gov.president.cks.fcm.data.FCMToken
+import tw.gov.president.cks.fcm.di.provideFCMIntentFilter
+import tw.gov.president.cks.fcm.manager.FCMManager
 
 /**
  * Main Screen
@@ -109,12 +109,9 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         val filter = provideFCMIntentFilter()
-        filter.addAction("MyData")
         LocalBroadcastManager.getInstance(this).registerReceiver(
             messageReceiver,
-//        IntentFilter("MyData")
             filter
-
         )
     }
 
@@ -124,27 +121,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val messageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        @RequiresApi(Build.VERSION_CODES.N)
         override fun onReceive(context: Context?, intent: Intent) {
             val action = intent.action
             Log.e("MainActivity", "BroadcastReceiver get Action  $action")
             when (action) {
-                "MyData" -> {
-                    text_view_notification.text = intent.extras?.getString("message")
+                Constant.FIREBASE_MESSAGING_REMOTE_MESSAGE -> {
+                    val remoterawMessage =intent.extras?.getParcelable<RemoteMessage>(Constant.REMOTE_MESSAGE_RAW)
+                    remoterawMessage?.let {  message ->
+                        Log.e("MainActivity", "Show get  notification - ${message.notification?.body}")
+                        message.data.forEach { key, value ->
+                            Log.e("MainActivity", "Show get Data- key : ${key} with value : ${value}")
+                        }
+                        text_view_notification.text = message.notification?.body
+                    }
                 }
-                Constant.FCM_TOKEN -> {
+                Constant.FCM_REG -> {
                     Log.e(TAG, "Get FCM_TOKEN : ")
-                }
-                Constant.REMOTE_MESSAGE_RAW -> {
-                    Log.e(TAG, "Google play services updated")
-                }
-                Constant.REMOTE_MESSAGE_NOTIFICATION_TYPE -> {
-                    Log.e(TAG, "Get REMOTE_MESSAGE_RAW ")
-                }
-                Constant.REMOTE_MESSAGE_DATA_TYPE -> {
-                    Log.e(TAG, "Get REMOTE_MESSAGE_DATA_TYPE")
-                }
-                Constant.REMOTE_MESSAGE_MIX_TYPE -> {
-                    Log.e(TAG, "Get REMOTE_MESSAGE_MIX_TYPE")
                 }
             }
         }

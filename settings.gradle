@@ -43,6 +43,18 @@ project(":model_entity:ReturnData").projectDir = file("./common/AndServer/model_
 //common model_entity library : FCM
 include ':model_entity:fcm_token'
 project(":model_entity:fcm_token").projectDir = file("./common/fcm_token")
+//common FirebaseMessagingService
+include ':FirebaseMessagingService'
+project(":FirebaseMessagingService").projectDir = file("./common/FirebaseMessagingService")
+include ':FCMManager'
+project(":FCMManager").projectDir = file("./common/FCMManager")
+
+include ':FCMManager'
+project(":FCMManager").projectDir = file("./common/FCMManager")
+
+include ':API_Module'
+project(":API_Module").projectDir = file("./common/API_Module")
+
 //nano server
 include ':NanoHTTPD'
 project(":NanoHTTPD").projectDir = file("./common/NanoHTTPD/core")

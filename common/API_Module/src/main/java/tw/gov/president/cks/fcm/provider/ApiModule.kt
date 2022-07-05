@@ -1,14 +1,11 @@
-package com.raywenderlich.android.drinkit.di
+package tw.gov.president.cks.fcm.provider
 
-import android.content.IntentFilter
-import android.net.ConnectivityManager
-import com.raywenderlich.android.drinkit.BuildConfig
-import com.raywenderlich.android.drinkit.api.FCMDefaultApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import tw.gov.president.cks.fcm.Constant
+import tw.gov.president.cks.fcm.api.BuildConfig
+import tw.gov.president.cks.fcm.api.FCMDefaultApiService
 import java.util.concurrent.TimeUnit
 
 fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {

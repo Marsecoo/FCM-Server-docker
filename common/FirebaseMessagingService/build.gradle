@@ -1,56 +1,28 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-android-extensions'//replace to  viewBinding
-    id 'com.google.gms.google-services'
 }
 apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/version.gradle'
 def version = this.ext.default_version()
 project.version =version.versionName
-ext {
-    Debug_properties_file = "https://raw.githubusercontent.com/CMingTseng/Useful_Gradle/master/debug.properties"
-    Release_properties_file = Debug_properties_file
-}
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.raywenderlich.android.drinkit"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode version.versionCode.toInteger()
         versionName version.versionName
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "API_HOST", '"http://192.168.15.241:8890/"'
-    }
-
-    signingConfigs {
-        Properties props = new Properties()
-        debug {
-            props.load(new URL(this.ext.Debug_properties_file).openStream())
-            keyAlias "${props['alias']}"
-            keyPassword "${props['key_password']}"
-            storePassword "${props['keystore_password']}"
-            storeFile file(buildDir.toString() + File.separator + "${props['keystore_file_name']}" + "${props['keystore_file_type']}")
-        }
-
-        release {
-            props.load(new URL(this.ext.Release_properties_file).openStream())
-            keyAlias "${props['alias']}"
-            keyPassword "${props['key_password']}"
-            storePassword "${props['keystore_password']}"
-            storeFile file(buildDir.toString() + File.separator + "${props['keystore_file_name']}" + "${props['keystore_file_type']}")
-        }
     }
 
     buildTypes {
         debug {
-            signingConfig signingConfigs.debug
         }
         release {
-            signingConfig signingConfigs.release
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -103,10 +75,8 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$timber_version"
 
     implementation project(path: ':model_entity:fcm_token')
-
     implementation project(path: ':API_Module')
     implementation project(path: ':FCMManager')
-    implementation project(path: ':FirebaseMessagingService')
 }
 
 task increaseVersion {
