@@ -1,0 +1,70 @@
+apply plugin: plugin.android
+apply plugin: plugin.andServer
+ext {
+    Debug_properties_file = "https://raw.githubusercontent.com/CMingTseng/Useful_Gradle/master/debug.properties"
+    Release_properties_file = Debug_properties_file
+}
+android {
+    compileSdkVersion androidBuild.compileSdkVersion
+    buildToolsVersion androidBuild.buildToolsVersion
+
+    defaultConfig {
+        applicationId androidBuild.applicationId
+        minSdkVersion androidBuild.sampleMinSdkVersion
+        targetSdkVersion androidBuild.sampleTargetSdkVersion
+        versionCode androidBuild.versionCode
+        versionName androidBuild.versionName
+    }
+
+    signingConfigs {
+        Properties props = new Properties()
+        debug {
+            props.load(new URL(this.ext.Debug_properties_file).openStream())
+            keyAlias "${props['alias']}"
+            keyPassword "${props['key_password']}"
+            storePassword "${props['keystore_password']}"
+            storeFile file(buildDir.toString() + File.separator + "${props['keystore_file_name']}" + "${props['keystore_file_type']}")
+        }
+
+        release {
+            props.load(new URL(this.ext.Release_properties_file).openStream())
+            keyAlias "${props['alias']}"
+            keyPassword "${props['key_password']}"
+            storePassword "${props['keystore_password']}"
+            storeFile file(buildDir.toString() + File.separator + "${props['keystore_file_name']}" + "${props['keystore_file_type']}")
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation project(':common:AndServer:api')
+    annotationProcessor project(':common:AndServer:processor')
+    implementation project(':model_entity:ReturnData')
+    implementation project(path: ':model_entity:fcm_token')
+    implementation project(path: ':sqlite')
+
+    implementation deps.android.material
+    implementation deps.android.compat
+
+    implementation deps.apache.lang
+    implementation deps.apache.collections
+
+    implementation deps.loading
+    implementation deps.json
+}

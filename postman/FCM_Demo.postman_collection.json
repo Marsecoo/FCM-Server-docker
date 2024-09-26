@@ -1,0 +1,239 @@
+{
+	"info": {
+		"_postman_id": "e8f2b785-0216-42c9-98d0-c8ff011244b3",
+		"name": "FCM_Demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "取得所有token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"url": {
+					"raw": "http://{{BaseUrl}}/getAllToken",
+					"protocol": "http",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"getAllToken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "取得單一token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{BaseUrl}}/getOneToken/qerewrtrtwettw",
+					"protocol": "http",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"getOneToken",
+						"qerewrtrtwettw"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "註冊token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"deviceId\":\"qerewrtrtwettw\",\n\t\"fcmToken\":\"ewqrewrqewrreqqtqgdssdfsdgs\"\n}"
+				},
+				"url": {
+					"raw": "http://{{BaseUrl}}/registerToken",
+					"protocol": "http",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"registerToken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "topic",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Authorization",
+						"value": "AAAA7M3vpTo:APA91bFmqB7fzhxBP97wy8NPqn3MQL2h2qq-Me9QE11YuX_InSwLT5SyIsrlphUIDu3wcAQgQDyHz_nspkxESBHdsGgCesipuChjAZGJ_b1CXgj7Qc9r5PJdTScLp-Q9vWS2akfKqvaY",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\"title\":\"Hello\", \"message\":\"The message is test\", \"topic\":\"contactTopic\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{BaseUrl}}/notification/topic?Content-type=application/json&Authorization",
+					"protocol": "http",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"notification",
+						"topic"
+					],
+					"query": [
+						{
+							"key": "Content-type",
+							"value": "application/json"
+						},
+						{
+							"key": "Authorization",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Authorization",
+						"value": "AAAA7M3vpTo:APA91bFmqB7fzhxBP97wy8NPqn3MQL2h2qq-Me9QE11YuX_InSwLT5SyIsrlphUIDu3wcAQgQDyHz_nspkxESBHdsGgCesipuChjAZGJ_b1CXgj7Qc9r5PJdTScLp-Q9vWS2akfKqvaY",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"title\":\"Hello\", \"message\":\"The message is token test \", \"token\":\"ewqrewrqewrreqqtqgdssdfsdgs\"}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{BaseUrl}}/notification/token?Content-type=application/json&Authorization",
+					"protocol": "http",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"notification",
+						"token"
+					],
+					"query": [
+						{
+							"key": "Content-type",
+							"value": "application/json"
+						},
+						{
+							"key": "Authorization",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "data",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Authorization",
+						"value": "AAAA7M3vpTo:APA91bFmqB7fzhxBP97wy8NPqn3MQL2h2qq-Me9QE11YuX_InSwLT5SyIsrlphUIDu3wcAQgQDyHz_nspkxESBHdsGgCesipuChjAZGJ_b1CXgj7Qc9r5PJdTScLp-Q9vWS2akfKqvaY",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"title\":\"Hello\", \"message\":\"The message is data test \", \"token\":\"u'r device specific token\"}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{BaseUrl}}/notification/data?Content-type=application/json&Authorization",
+					"protocol": "http",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"notification",
+						"data"
+					],
+					"query": [
+						{
+							"key": "Content-type",
+							"value": "application/json"
+						},
+						{
+							"key": "Authorization",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

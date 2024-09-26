@@ -1,0 +1,74 @@
+plugins {
+    id 'java-library'
+    id "org.jetbrains.kotlin.jvm"
+    id 'maven-publish'
+}
+
+apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/version.gradle'
+def version = this.ext.default_version()
+project.group = 'tw.gov.president.cks.fcm'
+project.version = version.versionName
+
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.targetCompatibility  = JavaVersion.VERSION_1_8
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation "io.ktor:ktor-websockets:$kotlin_ktor_version"
+    testImplementation "io.ktor:ktor-client-websockets:$kotlin_ktor_version"
+    testImplementation "io.ktor:ktor-client-cio:$kotlin_ktor_version"
+    testImplementation "io.ktor:ktor-client-okhttp:$kotlin_ktor_version"
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+    implementation "io.ktor:ktor-server-core:$kotlin_ktor_version"
+    implementation "io.ktor:ktor-server-netty:$kotlin_ktor_version"
+    implementation "io.ktor:ktor-websockets:$kotlin_ktor_version"
+    implementation "io.ktor:ktor-gson:$kotlin_ktor_version"
+
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
+
+    implementation project(path: ':model_entity:fcm_token')
+    implementation project(path: ':sqlite')
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+}
+
+task increaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.increaseVersion("")
+    }
+}
+
+task increaseHotfixVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.increaseHotfixVersion("")
+    }
+}
+
+task decreaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.decreaseVersion("")
+    }
+}

@@ -1,0 +1,156 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'com.google.gms.google-services'
+}
+apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/version.gradle'
+def version = this.ext.default_version()
+//check.dependsOn 'assembleDebugAndroidTest'
+ext {
+    Debug_properties_file = "https://raw.githubusercontent.com/CMingTseng/Useful_Gradle/master/debug.properties"
+    Release_properties_file = Debug_properties_file
+}
+
+android {
+    compileSdkVersion 30
+    lintOptions {
+        abortOnError false
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
+    defaultConfig {
+        applicationId "com.google.firebase.quickstart.fcm.demo"
+        minSdkVersion 16
+        targetSdkVersion 30
+        versionCode version.versionCode.toInteger()
+        versionName version.versionName
+        project.version = version.versionName
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "API_HOST", '"http://127.0.0.1:8890/"'
+    }
+
+    signingConfigs {
+        Properties props = new Properties()
+        debug {
+            props.load(new URL(this.ext.Debug_properties_file).openStream())
+            keyAlias "${props['alias']}"
+            keyPassword "${props['key_password']}"
+            storePassword "${props['keystore_password']}"
+            storeFile file(buildDir.toString() + File.separator + "${props['keystore_file_name']}" + "${props['keystore_file_type']}")
+        }
+
+        release {
+            props.load(new URL(this.ext.Release_properties_file).openStream())
+            keyAlias "${props['alias']}"
+            keyPassword "${props['key_password']}"
+            storePassword "${props['keystore_password']}"
+            storeFile file(buildDir.toString() + File.separator + "${props['keystore_file_name']}" + "${props['keystore_file_type']}")
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
+}
+
+dependencies {
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    // Kotlin Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
+
+    implementation project(":common:google:lintchecks")
+    implementation project(":common:google::chooserx")
+    implementation 'androidx.annotation:annotation:1.2.0'
+    implementation 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
+    implementation 'androidx.core:core:1.6.0'
+
+    implementation 'com.google.android.material:material:1.4.0'
+
+    // Import the Firebase BoM (see: https://firebase.google.com/docs/android/learn-more#bom)
+    implementation platform('com.google.firebase:firebase-bom:28.3.0')
+
+    // Firebase Cloud Messaging (Java)
+    implementation 'com.google.firebase:firebase-messaging'
+
+    // Firebase Cloud Messaging (Kotlin)
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+
+    // For an optimal experience using FCM, add the Firebase SDK
+    // for Google Analytics. This is recommended, but not required.
+    implementation 'com.google.firebase:firebase-analytics'
+
+    implementation 'com.google.firebase:firebase-installations-ktx:17.0.0'
+
+    implementation 'androidx.work:work-runtime:2.5.0'
+
+    // Gson
+    implementation "com.google.code.gson:gson:$gson_version"
+    // OkHttp
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_interceptor_version"
+
+    // Retrofit 2
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:$timber_version"
+
+    implementation project(path: ':model_entity:fcm_token')
+
+    // Testing dependencies
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test:runner:1.4.0'
+    androidTestImplementation 'androidx.test:rules:1.4.0'
+    androidTestImplementation 'androidx.annotation:annotation:1.2.0'
+}
+
+task increaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.increaseVersion("")
+    }
+}
+
+task increaseHotfixVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.increaseHotfixVersion("")
+    }
+}
+
+task decreaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.decreaseVersion("")
+    }
+}
+
+task showCurrentVersion {
+    group "version Tasks"
+    this.project.ext.currentVersion("")
+}

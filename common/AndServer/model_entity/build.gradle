@@ -1,0 +1,25 @@
+apply plugin: plugin.androidLibrary
+apply plugin: plugin.andServer
+
+android {
+    compileSdkVersion androidBuild.compileSdkVersion
+    buildToolsVersion androidBuild.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion androidBuild.sampleMinSdkVersion
+        targetSdkVersion androidBuild.sampleTargetSdkVersion
+        versionCode androidBuild.versionCode
+        versionName androidBuild.versionName
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation project(':common:AndServer:api')
+    annotationProcessor project(':common:AndServer:processor')
+    implementation deps.json
+}

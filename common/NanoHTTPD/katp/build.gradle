@@ -1,0 +1,74 @@
+plugins {
+    id 'java-library'
+    id "org.jetbrains.kotlin.jvm"
+    id 'maven-publish'
+}
+apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/version.gradle'
+def version = this.ext.default_version()
+project.group = 'com.weng'
+project.version = version.versionName
+
+java {
+    java.sourceCompatibility = JavaVersion.VERSION_11
+    java.targetCompatibility  = JavaVersion.VERSION_11
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    manifest {
+    }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+//    implementation 'org.nanohttpd:nanohttpd:2.3.1'
+    implementation 'com.gitee.l0km:nanohttpd:2.3.4'
+    implementation "com.google.code.gson:gson:$gson_version"
+    implementation project(path: ':model_entity:fcm_token')
+    implementation project(path: ':sqlite')
+}
+
+task increaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.increaseVersion("")
+    }
+}
+
+task increaseHotfixVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.increaseHotfixVersion("")
+    }
+}
+
+task decreaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.decreaseVersion("")
+    }
+}
+
+task showCurrentVersion {
+    group "version Tasks"
+    this.project.ext.currentVersion("")
+}

@@ -1,0 +1,55 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
+apply from: 'https://raw.githubusercontent.com/CKS-ROC/Useful_Gradle/master/version.gradle'
+def version = this.ext.default_version()
+project.version = version.versionName
+
+java {
+    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_11
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "11"
+}
+
+dependencies {
+    compileOnly "com.android.tools.lint:lint-api:30.0.0"
+    testImplementation "com.android.tools.lint:lint:30.0.0"
+    testImplementation "com.android.tools.lint:lint-tests:30.0.0"
+    testImplementation "junit:junit:4.13.2"
+}
+
+jar {
+    manifest {
+        attributes("Lint-Registry-v2": "com.firebase.lint.QuickstartIssueRegistry")
+    }
+}
+
+task increaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.increaseVersion("")
+    }
+}
+
+task increaseHotfixVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.increaseHotfixVersion("")
+    }
+}
+
+task decreaseVersion {
+    group "version Tasks"
+    doLast {
+        this.project.ext.decreaseVersion("")
+    }
+}
+
+task showCurrentVersion {
+    group "version Tasks"
+    this.project.ext.currentVersion("")
+}

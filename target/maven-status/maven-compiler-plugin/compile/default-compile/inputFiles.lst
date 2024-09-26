@@ -1,8 +1,0 @@
-/Users/jasonweng/Documents/FCM-Server-docker/src/main/java/com/weng/demo/fcm/model/PushNotificationRequest.java
-/Users/jasonweng/Documents/FCM-Server-docker/src/main/java/com/weng/demo/fcm/model/PushNotificationResponse.java
-/Users/jasonweng/Documents/FCM-Server-docker/src/main/java/com/weng/demo/fcm/controller/PushNotificationController.java
-/Users/jasonweng/Documents/FCM-Server-docker/src/main/java/com/weng/demo/DemoApplication.java
-/Users/jasonweng/Documents/FCM-Server-docker/src/main/java/com/weng/demo/fcm/service/PushNotificationService.java
-/Users/jasonweng/Documents/FCM-Server-docker/src/main/java/com/weng/demo/fcm/service/NotificationParameter.java
-/Users/jasonweng/Documents/FCM-Server-docker/src/main/java/com/weng/demo/fcm/service/FCMService.java
-/Users/jasonweng/Documents/FCM-Server-docker/src/main/java/com/weng/demo/fcm/FcmInitializer.java

@@ -1,0 +1,85 @@
+swagger: '2.0'
+info:
+  title: FCM device group management
+  description: |
+    With device group messaging, app servers can send a single message to multiple instances of an app running on devices belonging to a group. Typically, "group" refers a set of different devices that belong to a single user. All devices in a group share a common notification key, which is the token that FCM uses to fan out messages to all devices in the group.
+    Device group messaging makes it possible for every app instance in a group to reflect the latest messaging state. In addition to sending messages downstream to a notification key, you can enable devices to send upstream messages to a device group. You can use device group messaging with either the XMPP or HTTP connection server. The limit on data payload is 2KB when sending to iOS devices, and 4KB for other platforms.
+    The maximum number of members allowed for a notification_key is 20. 
+  version: 1.0.0
+host: android.googleapis.com
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+security:
+  - api_key: []
+tags:
+  - name: FCM
+    description: Firebase Cloud Messaging
+
+paths:
+  /gcm/notification:
+    post:
+      tags:
+      - FCM
+      description: Manage a device group
+      parameters:
+      - in: body
+        name: registrations
+        description: Operation to perform on a device group
+        required: true
+        schema:
+          $ref: '#/definitions/Operation'
+      - in: header
+        name: project_id
+        description: a unique numerical value created when you create your Firebase project, available in the Cloud Messaging tab of the Firebase console Settings pane. The sender ID is used to identify each app server that can send messages to the client app.
+        type: string
+      responses:
+        200:
+          description: Operation was processed successfully.
+          schema:
+            $ref: '#/definitions/NotificationKey'
+        400:
+          description: Indicates that the request could not be parsed as JSON, or it contained invalid fields (for instance, passing a string where a number was expected). The exact failure reason is described in the response and the problem should be addressed before the request can be retried.
+        401:
+          description: There was an error authenticating the sender account.
+        default:
+          description: Errors in the 500-599 range (such as 500 or 503) indicate that there was an internal error in the FCM connection server while trying to process the request, or that the server is temporarily unavailable (for example, because of timeouts). Sender must retry later, honoring any **Retry-After** header included in the response. Application servers must implement exponential back-off.
+          
+definitions:
+  Operation:
+    type: object
+    properties:
+      operation:
+        type: string
+        enum:
+        - create
+        - add
+        - remove
+      notification_key_name:
+        description: name or identifier (e.g., it can be a username) that is unique to a given group
+        type: string
+      notification_key: 
+        description: key that is unique to a given group
+        type: string
+      registration_ids:
+        description: registration tokens of the devices
+        type: array
+        items:
+          type: string
+
+  NotificationKey:
+    type: object
+    properties:
+      notification_key:
+        description: key that is unique to a given group
+        type: string
+
+securityDefinitions:
+  api_key:
+    description: Authentication key in the format key=YOUR_SERVER_KEY. Make sure this is the server key, whose value is available in your Firebase project console under Project Settings > Cloud Messaging. Android, iOS, and browser keys are rejected by FCM.
+    type: apiKey
+    name: Authorization
+    in: header
